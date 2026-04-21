@@ -6,14 +6,6 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SESSION_SECRET = process.env.SESSION_SECRET;
-
-// Enforce SESSION_SECRET in production
-if (!SESSION_SECRET) {
-  console.error('ERROR: SESSION_SECRET environment variable is required!');
-  console.error('Set it in Railway: Variables tab → Add SESSION_SECRET');
-  process.exit(1);
-}
 
 // ── Crash Protection ──────────────────────────────────────────────────────────
 process.on('uncaughtException', (err) => {
@@ -83,12 +75,11 @@ console.log('✓ SQLite database initialized');
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: SESSION_SECRET,
+  secret: 'alire-sajian-nusantara-session-2024',
   resave: false,
   saveUninitialized: false,
   cookie: { 
     maxAge: 8 * 60 * 60 * 1000, // 8 hours
-    secure: process.env.NODE_ENV === 'production', // HTTPS only in production
     httpOnly: true
   }
 }));
