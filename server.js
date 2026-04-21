@@ -390,6 +390,9 @@ app.delete('/api/waiting/:id', requireAuth, (req, res) => {
 // ── Download DB Backup ────────────────────────────────────────────────────────
 app.get('/api/download-db', requireAuth, (req, res) => {
   try {
+    // Force WAL checkpoint to ensure all data is in the main db file
+    db.pragma('wal_checkpoint(TRUNCATE)');
+    
     if (!fs.existsSync(DB_FILE)) {
       return res.status(404).json({ error: 'Database file not found' });
     }
