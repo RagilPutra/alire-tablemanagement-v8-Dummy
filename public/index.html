@@ -1666,7 +1666,7 @@ async function downloadDBBackup(){
     const url=window.URL.createObjectURL(blob);
     const a=document.createElement('a');
     a.href=url;
-    a.download='alire_backup_'+new Date().toISOString().split('T')[0]+'.json';
+    a.download='alire_backup_'+new Date().toISOString().split('T')[0]+'.db';
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
